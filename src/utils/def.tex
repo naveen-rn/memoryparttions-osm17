@@ -1,0 +1,47 @@
+% add some basic definitions
+\hyphenation{op-tical net-works semi-conduc-tor OpenSHMEM}
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\renewcommand{\algorithmcfname}{ALGORITHM}
+\SetAlFnt{\small}
+\SetAlCapFnt{\small}
+\SetAlCapNameFnt{\small}
+\SetAlCapHSkip{0pt}
+\IncMargin{-\parindent}
+
+\newcommand{\ie}{\textit{i}.\textit{e}.}
+\newcommand*\samethanks[1][\value{footnote}]{\footnotemark[#1]}
+
+\lstset{language=C}
+
+\newcommand{\keywords}[1]{\par\addvspace\baselineskip
+\noindent\keywordname\enspace\ignorespaces#1}
+
+\makeatletter
+\renewcommand\section{\@startsection{section}{1}{\z@}
+                        {-8\p@ \@plus -4\p@ \@minus -4\p@}
+                        {6\p@ \@plus 4\p@ \@minus 4\p@}
+                        {\normalfont\large\bfseries\boldmath
+                        \rightskip=\z@ \@plus 8em\pretolerance=10000 }}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}
+                        {-8\p@ \@plus -4\p@ \@minus -4\p@}
+                        {6\p@ \@plus 4\p@ \@minus 4\p@}
+                        {\normalfont\normalsize\bfseries\boldmath
+                        \rightskip=\z@ \@plus 8em\pretolerance=10000 }}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}
+                        {-4\p@ \@plus -4\p@ \@minus -4\p@}
+                        {-1.5em \@plus -0.22em \@minus -0.1em}
+                        {\normalfont\normalsize\bfseries\boldmath}}
+\makeatother
+
+\makeindex
+
+% specific definitons
+\newcommand{\csma}{Cray SHMEM}
+\newcommand{\osma}{OpenSHMEM}
+\newcommand{\sma}{\emph{SHMEM }}
+\newcommand{\pe}{\emph{PE }}
+\newcommand{\pes}{\emph{PEs }}
+\newcommand{\activeset}{\emph{Active Set }}

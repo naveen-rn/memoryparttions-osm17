@@ -1,0 +1,43 @@
+\documentclass[runningheads,a4paper]{llncs}
+
+% initial declarations and package inclusions
+\input{src/utils/packages}      %adding all the necessary packages
+\input{src/utils/def}           %adding all the necessary definitions
+
+\urldef{\mailsa}\path|
+{nravi, bcernohous, kkandalla, dmpou, pags}@cray.com|
+
+\begin{document}
+
+\mainmatter
+\title{Symmetric Memory Partitions in OpenSHMEM}
+\author{Naveen Namashivayam, Bob Cernohous, Krishna Kandalla, Dan Pou,\\
+and Mark Pagel}
+\institute{\mailsa\\Cray Inc.,}
+
+% running author and title
+\titlerunning{Symmetric Memory Partitions}
+\authorrunning{N. Namashivayam, B. Cernohous, K. Kandalla, D. Pou, M. Pagel}
+
+% create title and start the contents
+\maketitle
+\begin{abstract}
+\input{src/content/abstract}
+\end{abstract}
+
+\input{src/content/introduction}
+\input{src/content/background}
+\input{src/content/support}
+\input{src/content/smempart}
+\input{src/content/implement}
+\input{src/content/perf}
+\input{src/content/related}
+\input{src/content/conclusion}
+\input{src/content/acknowledgement}
+
+%bibliography
+\bibliographystyle{plain}
+\bibliography{src/bib/naveen}
+
+\end{document}
+\texttt{}
