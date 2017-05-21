@@ -1,0 +1,27 @@
+\section{Intel KNL Architecture}
+\label{src:knl}
+
+Intel's popular Many Integrated Core (MIC) architectures are marked
+under the name Xeon Phi and the second generation processors code
+named Knights Landing (KNL) are used as an example for emerging
+architectures with tiered memory systems in this paper. This section
+provides a brief introduction to the KNL processor architecture.
+
+The Intel KNL offers at least 64 compute cores per chip with four
+threads per core. Apart from offering more than 2 TF double precision
+floating point performance, each KNL core supports two 512-bit vector
+units and AVX-512 SIMD intructions.
+
+\subsection{Tiered Memory System in Intel KNL architecture}
+\label{src:knl/mmodel}
+KNL offers an on-package high bandwidth memory technology
+called Multi-Channel DRAM (MCDRAM) in addition to traditional DRAM.
+MCDRAM offers high bandwidth up to 4X more than DDR4, but with
+limited capacity (up to 16GB) when compared to DDR4 (up to 384GB).
+MCDRAM can be configured as a direct mapped L3 cache layer or as a
+distinct NUMA node. Configuring the MCDRAM as an L3 cache layer is a
+convenient way to port existing applications on to KNL based systems.
+However, configuring the MCDRAM as a distinct NUMA node and re-designing
+an application to fully take advantage of the high bandwidth offered
+by the MCDRAM can improve the performance of memory bandwidth bound
+applications.
