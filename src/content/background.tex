@@ -26,6 +26,23 @@ API includes the support for:
     \item mutual exclusion through distributed locking
 \end{itemize}
 
+\subsection{Cray SHMEM}
+\label{src:bg/crayshmem}
+There are various production-grade, closed source OpenSHMEM implementation as well
+as open source implementations available. Cray SHMEM~\cite{csma} is a vendor-based
+closed source OpenSHMEM implementation from Cray Inc., available as part of the Cray
+Message Passing Toolkit~\cite{mpt} (MPT). It is implemented over DMAPP~\cite{dmapp},
+an optimized communication layer for Cray architectures. Cray SHMEM is OpenSHMEM
+specification version-1.3~\cite{osm13} compliant. Apart from the OpenSHMEM standard
+specific features, it provides support for the following features as \texttt{SHMEMX}
+prefixed extensions:
+\begin{itemize}
+    \item thread-safety in OpenSHMEM extensions;
+    \item put with signal communication;
+    \item OpenSHMEM PE subsets called as Teams; and
+    \item Team-based collective communication extensions;
+\end{itemize}
+
 \subsection{OpenSHMEM Memory Model}
 \label{src:bg/mmodel}
 Based on accessibility, any OpenSHMEM program consists of two types of data
@@ -68,20 +85,3 @@ Variables on both the data and symmetric heap segments are remotely accessible.
 Figure~\ref{fig:mmodel} also shows that there is only one symmetric heap segment
 per PE. Local variables are allocated on the local data objects which retains the
 same memory model from the underlying base language.
-
-\subsection{Cray SHMEM}
-\label{src:bg/crayshmem}
-There are various production-grade, closed source OpenSHMEM implementation as well
-as open source implementations available. Cray SHMEM~\cite{csma} is a vendor-based
-closed source OpenSHMEM implementation from Cray Inc., available as part of the Cray
-Message Passing Toolkit~\cite{mpt} (MPT). It is implemented over DMAPP~\cite{dmapp},
-an optimized communication layer for Cray architectures. Cray SHMEM is OpenSHMEM
-specification version-1.3~\cite{osm13} compliant. Apart from the OpenSHMEM standard
-specific features, it provides support for the following features as \texttt{SHMEMX}
-prefixed extensions:
-\begin{itemize}
-    \item thread-safety in OpenSHMEM extensions;
-    \item put with signal communication;
-    \item OpenSHMEM PE subsets called as Teams; and
-    \item Team-based collective communication extensions;
-\end{itemize}

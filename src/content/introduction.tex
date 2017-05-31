@@ -11,28 +11,30 @@ offers high bandwidth (up to 4X more than DDR4) with limited
 capacity (upto 16GB). Vendors provide their own programming approaches
 to differentiate these different kinds of memory using external libraries
 like CUDA~\cite{cuda}, Memkind~\cite{memkind}. These approaches would
-turn applications non-portable. In response, it for the programming
+turn applications non-portable. In response, it is for the programming
 library interfaces like OpenSHMEM~\cite{osm} to provide a more consistent
 and portable interface for accessing different kinds of memory on a
 tiered memory systems.
 
 In this paper, we define OpenSHMEM runtime changes and extensions to
 support different kinds of memory for the symmetric heap. The OpenSHMEM
-memory model creates the symmetric heap during the program execution on a
+memory model creates the symmetric heap during program execution on a
 memory location determined by the implementation. The runtime changes
-described in this paper would allow users to determine the memory
-location at which the symmetric heap can be created. We call these
-user-determined memory locations as \emph{Symmetric Memory Partitions}.
-Each Memory Partitions feature a list of traits to define their
-characteristics and memory kind being one of those featured traits.
+described in this paper would allow users to determine a partition on
+which the symmetric heap can be created. We call these user-determined
+partition as \emph{Symmetric Memory Partitions}. Each memory partitions
+feature a list of traits to define their characteristics and memory
+kind being one of those featured traits.
 
 The major contributions of this work are:
 \begin{itemize}
     \item proposing a set of new runtime changes and extensions in
     OpenSHMEM to support different kinds of memory on tiered systems;
-    \item implementation of the proposed feature on
+    \item implementation of the proposed feature in
     Cray SHMEM~\cite{csma}, a vendor-specific OpenSHMEM implementation
-    from Cray Inc; and
+    from Cray Inc;
+    \item performance regression analysis on creating multiple symmetric
+    partitions; and
     \item performance analysis of these proposed extensions using
     modified Parallel Research Kernels (ParRes)~\cite{parres} on Intel
     KNL processors as an example use-case for emerging systems.
