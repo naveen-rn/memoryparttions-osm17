@@ -9,20 +9,21 @@ off-package DDR memory with the increased high bandwidth on-package
 memory called as the Multi-Channel DRAM~\cite{MCDRAM} (MCDRAM). MCDRAM
 offers high bandwidth (up to 4X more than DDR4) with limited
 capacity (upto 16GB). Vendors provide their own programming approaches
-to differentiate these different kinds of memory using external libraries
-like CUDA~\cite{cuda}, Memkind~\cite{memkind}. These approaches would
-turn applications non-portable. In response, it is for the programming
-library interfaces like OpenSHMEM~\cite{osm} to provide a more consistent
-and portable interface for accessing different kinds of memory on a
-tiered memory systems.
+using external libraries like CUDA~\cite{cuda} and Memkind~\cite{memkind}
+to differentiate the different kinds of memory or users are forced to
+use low level programming approaches. Irrespective of the selection these
+approaches would turn applications non-portable. In response, it is for
+the programming library interfaces like OpenSHMEM~\cite{osm} to provide
+a more consistent and portable interface for accessing different kinds
+of memory on tiered memory systems.
 
 In this paper, we define OpenSHMEM runtime changes and extensions to
 support different kinds of memory for the symmetric heap. The OpenSHMEM
 memory model creates the symmetric heap during program execution on a
-memory location determined by the implementation. The runtime changes
-described in this paper would allow users to determine a partition on
+memory region determined by the implementation. The runtime changes
+described in this paper would allow users to determine a region on
 which the symmetric heap can be created. We call these user-determined
-partition as \emph{Symmetric Memory Partitions}. Each memory partitions
+region as \emph{Symmetric Memory Partitions}. Each memory partitions
 feature a list of traits to define their characteristics and memory
 kind being one of those featured traits.
 
@@ -40,18 +41,19 @@ The major contributions of this work are:
     KNL processors as an example use-case for emerging systems.
 \end{itemize}
 
-This paper is organized as follows. In Section~\ref{src:bground} we give a
-brief overview on the current OpenSHMEM memory model and in
-Section~\ref{src:knl} we provide a brief overview of Intel KNL architecture.
-In Section~\ref{src:drelated}, we motivate the need for the symmetric memory
-partitions in OpenSHMEM by assessing the performance benefits on using
-different kinds of memory on parallel applications using other programming
-models like Message Passing Interface~\cite{mpi} (MPI), which already has
-support for accessing different kinds of memory. In Section~\ref{src:smempart},
-we propose the new runtime changes and extensions in OpenSHMEM to support
-different kinds of memory for future emerging systems. In
-Section~\ref{src:implement}, we follow up with the implementation of the
-proposed changes in Cray SHMEM. In the experimental results presented in
-Section~\ref{src:perf} we use the modified ParRes OpenSHMEM kernels for
-testing the performance of the proposed routines. We discuss related work
+This paper is organized as follows.
+In Section~\ref{src:bground} we give a brief overview on the current
+OpenSHMEM memory model and in Section~\ref{src:smempart} we propose the
+new runtime changes and extensions in OpenSHMEM to support different kinds
+of memory for future emerging systems. In Section~\ref{src:knl} we provide
+a brief overview of Intel KNL architecture with different modes of memory
+configuration. In Section~\ref{src:drelated}, we motivate the need for
+the symmetric memory partitions in OpenSHMEM by assessing the performance
+benefits on using the different kinds of memory in Intel KNL processors
+with different mode of configurations. In Section~\ref{src:implement}, we
+follow up with the implementation of the proposed changes in Cray SHMEM.
+In the experimental results presented in Section~\ref{src:perf} we use
+the modified ParRes OpenSHMEM kernels for testing the performance of the
+proposed routines along with the performance regression analysis with the
+introduction of multiple symmetric heaps. We discuss related work
 in Section~\ref{src:relate} and we conclude in Section~\ref{src:conclusion}.

@@ -7,21 +7,67 @@ named Knights Landing (KNL) are used as an example for emerging
 architectures with tiered memory systems in this paper. This section
 provides a brief introduction to the KNL processor architecture.
 
-The Intel KNL offers at least 64 compute cores per chip with four
-threads per core. Apart from offering more than 2 TF double precision
-floating point performance, each KNL core supports two 512-bit vector
-units and AVX-512 SIMD intructions.
-
-\subsection{Tiered Memory System in Intel KNL architecture}
-\label{src:knl/mmodel}
-KNL offers an on-package high bandwidth memory technology
-called Multi-Channel DRAM (MCDRAM) in addition to traditional DRAM.
-MCDRAM offers high bandwidth up to 4X more than DDR4, but with
+The Intel KNL offers at least 68 compute cores per chip with four
+threads per core. %Apart from offering more than 2 TF double precision
+%floating point performance, each KNL core supports two 512-bit vector
+%units and AVX-512 SIMD intructions.
+The 68 compute cores are organized
+in 34 tiles with each tile having 2 compute cores and a shared 1MB
+L2 cache. These 34 tiles are placed in a 2D mesh and connected through
+an on-chip interconnect. KNL offers an on-package high bandwidth memory
+technology called Multi-Channel DRAM (MCDRAM) in addition to traditional
+DRAM. MCDRAM offers high bandwidth up to 4X more than DDR4, but with
 limited capacity (up to 16GB) when compared to DDR4 (up to 384GB).
-MCDRAM can be configured as a direct mapped L3 cache layer or as a
-distinct NUMA node. Configuring the MCDRAM as an L3 cache layer is a
-convenient way to port existing applications on to KNL based systems.
-However, configuring the MCDRAM as a distinct NUMA node and re-designing
-an application to fully take advantage of the high bandwidth offered
-by the MCDRAM can improve the performance of memory bandwidth bound
-applications.
+%MCDRAM can be configured as a direct mapped L3 cache layer or as a
+%distinct NUMA node. Configuring the MCDRAM as an L3 cache layer is a
+%convenient way to port existing applications on to KNL based systems.
+%However, configuring the MCDRAM as a distinct NUMA node and re-designing
+%an application to fully take advantage of the high bandwidth offered
+%by the MCDRAM can improve the performance of memory bandwidth bound
+%applications.
+
+\begin{figure}[!h]
+    \vspace{-20pt}
+    \hspace*{5mm}
+    \includegraphics[scale=0.20]{image/mem-mode.png}
+    \vspace{-25pt}
+    \caption{Intel KNL Memory Configuration Modes}
+    \label{fig:memmode}
+\end{figure}
+
+\subsection{Memory Modes}
+\label{src:knl/config}
+MCDRAM can be configured in the following modes.
+\begin{itemize}
+    \item \texttt{cache mode} - when configured in Cache mode,
+    MCDRAM acts as a last-level cache and it is completely used to
+    cache the DDR4 data. %It is a convenient way to port existing
+    %applications on to KNL based systems;
+    \item \texttt{flat mode} - in Flat mode, the complete
+    MCDRAM is available as an addressable memory and share the
+    physical address space with DDR4. With respect to Non Uniform
+    Memory Access (NUMA), it is exposed as a separate NUMA node
+    without cores, while DDR4 is exposed as another NUMA node with
+    all the cores.
+    %Configuring MCDRAM as a distinct NUMA node and
+    %re-designing an application to fully take advantage of the high
+    %bandwidth offered by the MCDRAM can improve the performance of
+    %memory bandwidth bound applications; and
+    \item \texttt{hybrid mode} - as the name suggests, in
+    Hybrid mode a portion of MCDRAM is configured as addressable
+    memory and the rest as cache.
+\end{itemize}
+
+\subsection{NUMA Cluster Modes}
+\label{src:knl/cluster}
+As specified previously, the 68 compute cores are arranged in a 2D
+mesh and connected using on-chip interconnect. With NUMA some memory
+on the node has different lattices or bandwiths to the core. Based on
+clustering, there are two important types of NUMA modes: quadrant and
+Sub-NUMA Clustering (SNC).
+
+In quadrant mode the chip is divided into four different quadrants, but
+it is exposed as a single NUMA domain. In SNC mode each quadrant is
+available as a separate NUMA domain and further it is divided into SNC2
+and SNC4 modes, based on the number of quadrants.
+

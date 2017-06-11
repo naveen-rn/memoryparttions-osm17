@@ -1,54 +1,74 @@
 \section{Symmetric Memory Partitions in OpenSHMEM}
 \label{src:smempart}
 
-As mentioned in Section~\ref{src:bg/mmodel}, the OpenSHMEM memory
+As mentioned in Section~\ref{src:mmodel}, the OpenSHMEM memory
 model allows creation of one symmetric heap per PE during program
 execution on a memory region determined by the implementation. The
-only trait the user controls on the symmetric heap is the size. This
-paper proposes a new feature called Symmetric Memory Partitions to
-define the runtime changes and extensions to support different kinds
-of memory for the symmetric heap.
+only trait the user controls on the symmetric heap is the size.
+This paper proposes a new feature called Symmetric Memory Partitions
+to define the runtime changes and extensions to support different
+kinds of memory for the symmetric heap. Figure~\ref{fig:smem-model}
+shows the modified memory model and the proposed changes are as
+follows:
 
-Symmetric Heap is created on a single memory location determined by
-the implementation or at multiple memory regions determined by the
-users. The user-determined memory region are called as the Symmetric
-Memory Partitions. Only a single symmetric heap is created at each
-symmetric memory partition. Each symmetric memory partition is
-identified using its \emph{Partition ID}, which is used in dynamic
-OpenSHMEM memory allocation extensions. Apart from the Partition ID,
-each symmetric memory partition have their own memory traits to define
-the characteristics of a memory partition. Multiple symmetric heaps
-can be created by defining multiple separate memory partitions. Apart
-from name, data type, and size attributes, symmetric data objects
-stored on symmetric heaps created over a memory partition have
-Partition ID as an extra attribute.
+\begin{figure}[!h]
+    \vspace{-20pt}
+    \hspace*{5mm}
+    \includegraphics[scale=0.20]{image/smem-model.png}
+    \vspace{-25pt}
+    \caption{OpenSHMEM Memory Model with Symmetric Memory Partitions}
+    \label{fig:smem-model}
+\end{figure}
+
+\begin{itemize}
+    \item Symmetric Heap is created on a single memory region
+    determined by the implementation or on multiple memory regions
+    determined by the users. The user-determined memory regions are
+    called as the Symmetric Memory Partitions.
+    \item Only a single symmetric heap is created at each symmetric
+    memory partition. Multiple symmetric heaps can be created by
+    defining multiple separate memory partitions.
+    \item Each symmetric memory partition is identified using its
+    \emph{Partition ID} label.
+    \item Apart from Partition ID each symmetric memory partition
+    have their own memory traits to define the characteristics of each
+    partition.
+    \item Apart from name, data type, and size attributes, symmetric
+    data objects stored on symmetric heap segments have Partition ID
+    as an extra attribute.
+\end{itemize}
 
 \subsection{Memory Partition Traits}
 \label{src:smempart/traits}
 The characteristics of each symmetric memory partition is uniform
 across all PEs and is defined using the environmental variable
-\texttt{SHMEM\_SYMMETRIC\_PARTITION}. The characteristics of these
-partitions are established using the following required and some
-optional traits.
-\begin{itemize}
-    \item \emph{Partition ID} is the required trait represented as
-    an integer to identify the partition;
-    \texttt{SHMEM\_MAX\_PARTITION\_ID} is the library constant used
-    to determine the maximum value that can be used to represent
-    the partition ID;
-    \item \emph{SIZE} is one of another required traits to
-    represent the number of bytes to allocate for symmetric heap;
-    \item \emph{PGSIZE} is an optional trait to represent the
-    number of bytes used to specify the size of the page used by
-    the partition;
-    \item \emph{KIND} is another optional trait, identified with a
-    string constant to specify the kind of memory is multiple memory
-    kinds are supported by the system and identified by the
-    implementation; and
-    \item \emph{POLICY} is an optional trait and identified using
-    string constants to represent the memory allocation policy for
-    the partition.
-\end{itemize}
+\texttt{SHMEM\_SYMMETRIC\_PARTITION}. Figure~\ref{fig:env} shows
+the representaton of the \texttt{SHMEM\_SYMMETRIC\_PARTITION}
+environmental variable with all its optional and required traits.
+The characteristics of the partitions are established using the
+following required and optional traits.
+
+\subsubsection{Partition ID} \texttt{Partition ID} is a required
+trait. It is represented as an integer to identify the partition.
+\texttt{SHMEM\_MAX\_PARTITION\_ID} is a library constant used to
+determine the maximum value that can be used to represent the
+partition ID.
+
+\subsubsection{SIZE} \texttt{SIZE} is another required traits to
+represent the number of bytes used for allocating the symmetric
+heap.
+
+\subsubsection{PGSIZE} \texttt{PGSIZE} is an optional trait to
+represent the number of bytes used to specify the size of the
+page used by the partition.
+
+\subsubsection{KIND} \texttt{KIND} is another optional trait.
+It is identified with a string constant. It is used to specify
+the kind of memory used by the partition.
+
+\subsubsection{POLICY} \texttt{POLICY} is an optional trait and
+identified using string constants to represent the memory
+allocation policy for the partition.
 
 \begin{figure}
     \lstset{language=c,
@@ -59,32 +79,28 @@ optional traits.
 SHMEM_SYMMETRIC_PARTITION<ID>=SIZE=<size>[:PGSIZE=<pgsize>]
                              [:KIND=<kind>:POLICY=<policy>]
     \end{lstlisting}
+    \vspace{-10pt}
     \caption{Environmental Variable to define the Partition
     Characteristics}
     \label{fig:env}
 \end{figure}
-Figure~\ref{fig:env} shows the representaton of the
-\texttt{SHMEM\_SYMMETRIC\_PARTITION} environmental variable with
-all its optional and required traits.
 
-\subsubsection{Required Partition Traits}
+\subsection{Required Partition Traits}
 \label{src:smempart/req}
-One, two, or more partitions
-can be specified using this environment variable. Each partition is
-represented using a number called Partition ID. In
-Figure~\ref{fig:env},\textless ID\textgreater is the user-specified
-part of the environment variable to represent the Partition ID. A
-maximum of \texttt{SHMEM\_MAX\_PARTITIONS} can be defined. These
-defined partitions can have any non-zero positive integer between
-1 and \texttt{SHMEM\_MAX\_PARTITION\_ID} as Partition ID. Each
-partition takes a maximum of four traits as input.
+One, two, or more partitions can be specified using this
+environment variable. Each partition is represented using a label
+called Partition ID. In Figure~\ref{fig:env},\textless ID\textgreater
+is the user-specified part of the environment variable representing
+the Partition ID. A maximum of \texttt{SHMEM\_MAX\_PARTITIONS} can
+be defined. These defined partitions can have any non-zero positive
+label between 1 and \texttt{SHMEM\_MAX\_PARTITION\_ID}.
 
 The SIZE is the only required trait. It is used to specify the required
-symmetric heap size on the partition. The total size of the symmetric heap
-is determined as the sum of all SIZE traits in the defined memory
+symmetric heap size on the partition. The total size of the symmetric
+heap is determined as the sum of SIZE traits in all the defined memory
 partitions.
 
-\subsubsection{Optional Partition Traits}
+\subsection{Optional Partition Traits}
 \label{src:smempart/optional}
 The PGSIZE trait is used to specify the size of page used by the partition.
 The KIND trait is used to specify the memory kind used by the partition.
@@ -95,8 +111,8 @@ to represent the KIND.
 When the optional traits are used to define the characteristics of the
 partition, the POLICY trait is used to determine the strictness level
 the optional traits are to be honoured by the implemantation. Mandatory,
-preferred, system default and interleaved are some examples of the
-values to the POLICY option.
+preferred, system default and interleaved are some examples of values
+to the POLICY option.
 
 \subsection{Memory Partition Extensions}
 \label{src:smempart/extensions}
@@ -104,8 +120,7 @@ values to the POLICY option.
 and \texttt{shmem\_align} are the existing symmetric heap management
 routines. Apart from these existing routines, as part of the runtime
 changes to support symmetric heap partitions, this paper proposes the
-following two symmetric heap management routines identified using the
-symmetric memory partition ID: \texttt{shmem\_partition\_malloc} and
+following two new routines: \texttt{shmem\_partition\_malloc} and
 \texttt{shmem\_partition\_align}.
 
 \begin{figure}
@@ -125,16 +140,5 @@ void *shmem_partiton_align(size_t alignment, size_t size,
 The functional semantics and the requirements of
 \texttt{shmem\_partition\_malloc} and \texttt{shmem\_partition\_align}
 are very similar to \texttt{shmem\_malloc} and \texttt{shmem\_align},
-the only difference being the new extensions allows the users to
-determine the symmetric heap on the partitions they were created using
-the partiton ID argument.
-
-\begin{figure}[!h]
-    \vspace{-20pt}
-    \hspace*{5mm}
-    \includegraphics[scale=0.20]{image/smem-model.png}
-    \vspace{-25pt}
-    \caption{OpenSHMEM Memory Model with Symmetric Memory Partitions}
-    \label{fig:smem-model}
-\end{figure}
-
+the only difference being the new extensions allows users to determine
+the symmetric heap using the partiton ID argument.
