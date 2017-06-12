@@ -1,2 +1,17 @@
 \section{Related Work}
 \label{src:relate}
+In this paper we studied the reason behind having OpenSHMEM features to
+utilize different kinds of memory. The need for these features for the
+upcoming system architectures are not something specific to OpenSHMEM.
+Other programming libraries started discussing on adding such similar
+features in their specifications. For example, OpenMP~\cite{openmp}
+has a memory model working group to discuss on the runtime changes
+needed for supporting multiple kinds of memory for future architectures.
+Similarly, Cray MPICH~\cite{cray-mpich} which is an optimized MPI
+implementation for Cray systems have improvised the functionality of
+\texttt{MPI\_Alloc\_mem} to enable users to select the kind of memory to
+be used for allocating the requested memory size. ~\citeauthor{libfabrics}
+provides detailed explanation on the performance of using different
+memory kinds using \texttt{MPI\_Alloc\_mem} on two real world applications
+WOMBAT and SNAP.
+%need to fix citataions correctly

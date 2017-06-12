@@ -72,7 +72,7 @@ data sies. There are average performance variations is around 2\% to
 the number of partitions to 127, we could see the variations as high as
 6\%. We expect users to create only one partition per memory kind
 and not \texttt{N} unnecessary partitions. Moreover, as mentioned in
-~\ref{tab:const} the \texttt{SHMEMX\_MAX\_PARTITIONS} library constant
+Table~\ref{tab:const} the \texttt{SHMEMX\_MAX\_PARTITIONS} library constant
 in Cray SHMEM is 7.
 
 \begin{figure*}[t!]
@@ -88,3 +88,6 @@ in Cray SHMEM is 7.
 We observe similar performance variation on small data sizes on other
 RMA and AMO operations. For larger message sizes, the segment lookup
 doesn't contribute much for any performance variation.
+
+\section{Performance Analysis}
+\label{src:perf}
