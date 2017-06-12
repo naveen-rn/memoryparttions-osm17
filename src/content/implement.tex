@@ -1,2 +1,68 @@
-\section{Implementing Symmetric Memory Partitions in Cray SHMEM}
+\section{Symmetric Memory Partitions in Cray SHMEM}
 \label{src:implement}
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c c|}\hline
+    Library Constants & values \\[0.5ex]
+    \hline\hline
+    SHMEMX\_MAX\_PARTITIONS & 7 \\
+    SHMEMX\_MAX\_PARTITION\_ID & 127 \\
+    \hline
+\end{tabular}
+\caption{Memory partition specific OpenSHMEM library constants}
+\label{tab:const}
+\end{table}
+
+The symmetric memory partitions features introduced in Section
+~\ref{src:smempart} are available as \texttt{SHMEMX} prefixed
+features in Cray SHMEM. Table~\ref{tab:const} provides information
+on the library constants used to determine the range of partition
+IDs that can be used and the maximum number of partitions that can
+be created per job.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l l l|}\hline
+    Traits & values & Explanation\\[0.5ex]
+    \hline\hline
+    \multirow{3}{4em}{KIND} & NORMALMEM  & primary memory kind for
+                                           the node \\
+                            & FASTMEM    & faster memory in addition
+                                           to NORMALMEM \\
+                            & SYSDEFAULT & system defined memory \\
+                            &&\\
+    \multirow{4}{4em}{POLICY} & MANDATORY   & abort if requested memory
+                                              kind not available \\
+                              & PREFERRED   & use other memory kinds if
+                                              requested kind fails \\
+                              & INTERLEAVED & page allocation interleaved
+                                              across NUMA domains \\
+                              & SYSDEFAULT  & system defined policy \\
+    \hline
+\end{tabular}
+\caption{Available partition traits in Cray SHMEM}
+\label{tab:trait}
+\end{table}
+
+Table~\ref{tab:trait} refers the values for the user-determined traits
+in defining the characteristics of the symmetric partition. SIZE and PGSIZE
+can be any appropriate symmetric heap size and any available page size in
+the system represented as bytes. KIND determines the type of memory to be
+used and POLICY the memory kind allocation policy.
+
+On Intel KNL based system, NORMALMEM refers to DDR4 and FASTMEM refers to
+MCDRAM. If MCDRAM is requested and the requested memory kind if not available,
+based on the allocation policy Cray SHMEM either aborts the job or look for
+other alternate memory kind to be used. As mentioned in
+section~\ref{src:knl/cluster}, number of NUMA domains depends on the NUMA
+clustering either through quadrant or SNC mode. INTERLEAVED is used to shift
+allocation across different NUMA domains. On quadrant mode, since MCDRAM is
+available as a single NUMA domain, INTERLEAVED will allocate on a single
+NUMA domain. On SNC2 and SNC4 mode, allocation interleaves across 2 and 4
+NUMA domains respectively.
+
+All the available kinds of memory are identified and the environmental
+variables are queried during \texttt{shmem\_init} operation. Memory kind
+identification is performed using \texttt{numactl} system calls. SYSDEFAULT
+refers to the system defined memory use based on \texttt{numactl} system
+calls and not the implementation default values.
