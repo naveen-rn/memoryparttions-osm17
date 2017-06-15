@@ -1,4 +1,4 @@
-To extract the best performance on emerging tiered memory systems,
+To extract best performance on emerging tiered memory systems,
 it is essential for applications to use the different kinds of
 memory available on the system. OpenSHMEM memory model consists of
 data objects that are private to each \emph{Processing Element}
@@ -9,10 +9,9 @@ Objects}. They are allocated on a memory region called as
 on a region determined by the OpenSHMEM implementation. This paper
 proposes a new feature called \emph{Symmetric Memory Partitions} to
 enable users to determine the size along with other memory traits
-for creating the symmetric heap, where the kind of memory is one of
-the featured traits. Moreover, this paper uses Intel KNL as an
-example use case for emerging tiered memory systems. This paper also
-describes the implementation symmetric memory partitions in
+for creating the symmetric heap. Moreover, this paper uses Intel KNL
+as an example use case for emerging tiered memory systems. This paper
+also describes the implementation of symmetric memory partitions in
 Cray SHMEM and use different OpenSHMEM microbenchmark kernels to
 show the benefits of selecting the memory region for the symmetric
 heap.
