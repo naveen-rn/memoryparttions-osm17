@@ -1,17 +1,30 @@
-OpenSHMEM memory model consists of data objects which are private
-to each \emph{Processing Elements} (PEs) and data objects that are
-remotely accessible by all PEs. The remotely accessible data objects
-are called as \emph{Symmetric Data Objects} and are allocated on a
-special memory region called \emph{Symmetric Heap}. The symmetric heap
-is created during program execution by the OpenSHMEM implementation.
-This paper proposes a new feature called \emph{Symmetric Memory
-Partitions} to enable users to determine the size and other memory
-traits for creating one or multiple symmetric heaps per PE. Moreover,
-we describe the implementation of Symmetric Memory Partitions in
-Cray SHMEM along with a list of traits that are used to define the
-characteristics of each partition and the kind of memory being one of
-the featured traits. This paper also uses different OpenSHMEM
-microbenchmark kernels to show the benefits of memory partitions in
-OpenSHMEM in utilizing the different performance and capacity
-characteristics on emerging systems with Intel KNL as an example use
-case.
+To extract the best performance on emerging tiered memory systems,
+it is essential for applications to use the different kinds of
+memory available on the system. OpenSHMEM memory model consists of
+data objects that are private to each \emph{Processing Element}
+(PE) and data objects that are remotely accessible by all PEs. The
+remotely accessible data objects are called \emph{Symmetric Data
+Objects}. They are allocated on a memory region called as
+\emph{Symmetric Heap} and it is created during program execution
+on a region determined by the OpenSHMEM implementation. This paper
+proposes a new feature called \emph{Symmetric Memory Partitions} to
+enable users to determine the size along with other memory traits
+for creating the symmetric heap, where the kind of memory is one of
+the featured traits. Moreover, this paper uses Intel KNL as an
+example use case for emerging tiered memory systems. This paper also
+describes the implementation symmetric memory partitions in
+Cray SHMEM and use different OpenSHMEM microbenchmark kernels to
+show the benefits of selecting the memory region for the symmetric
+heap.
+%uses Intel KNL as
+%an example use case for emerging systems.
+%and describe the
+%implementation of symmetric memory partitions in Cray SHMEM along with
+%a list of traits that are used to define the characteristics of each
+%partition and the kind of memory being one of the featured traits.
+%This paper uses Intel KNL as
+
+%This paper also uses different OpenSHMEM microbenchmark kernels to
+%show the benefits of memory partitions in OpenSHMEM in utilizing the
+%different performance and capacity characteristics on emerging systems
+%with Intel KNL as an example use case.
