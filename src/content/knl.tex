@@ -2,10 +2,12 @@
 \label{src:knl}
 
 Intel's popular Many Integrated Core (MIC) architectures are marked
-under the name Xeon Phi and the second generation processors code
-named Knights Landing (KNL) are used as an example for emerging
-architectures with tiered memory systems in this paper. This section
-provides a brief introduction to the KNL processor architecture.
+under the name Xeon Phi and the second generation processors are
+code
+named Knights Landing (KNL). Intel KNL processors are used as an
+example for emerging architectures with tiered memory systems in
+this paper. This section provides a brief introduction to KNL
+processor architecture.
 
 The Intel KNL offers at least 68 compute cores per chip with four
 threads per core. %Apart from offering more than 2 TF double precision
@@ -27,17 +29,19 @@ limited capacity (up to 16GB) when compared to DDR4 (up to 384GB).
 %applications.
 
 \begin{figure}[!h]
-    \vspace{-20pt}
+    \vspace{-35pt}
     \hspace*{5mm}
     \includegraphics[scale=0.20]{image/mem-mode.png}
     \vspace{-25pt}
     \caption{Intel KNL Memory Configuration Modes}
+    \vspace{-25pt}
     \label{fig:memmode}
 \end{figure}
 
 \subsection{Memory Modes}
 \label{src:knl/config}
-MCDRAM can be configured in the following modes.
+As shown in Fig.~\ref{fig:memmode}, MCDRAM can be configured in the
+following modes.
 \begin{itemize}
     \item \texttt{cache mode} - when configured in Cache mode,
     MCDRAM acts as a last-level cache and it is completely used to
@@ -68,6 +72,5 @@ Sub-NUMA Clustering (SNC).
 
 In quadrant mode the chip is divided into four different quadrants, but
 it is exposed as a single NUMA domain. In SNC mode each quadrant is
-available as a separate NUMA domain and further it is divided into SNC2
-and SNC4 modes, based on the number of quadrants.
-
+available as a separate NUMA domain and further it is divided into
+SNC2 and SNC4 modes, based on the number of quadrants.

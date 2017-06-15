@@ -61,7 +61,7 @@ available as a single NUMA domain, INTERLEAVED will allocate on a single
 NUMA domain. On SNC2 and SNC4 mode, allocation interleaves across 2 and 4
 NUMA domains respectively.
 
-All the available kinds of memory are identified and the environmental
+All the available kinds of memory are identified and the environment
 variables are queried during \texttt{shmem\_init} operation. Memory kind
 identification is performed using \texttt{numactl} system calls. SYSDEFAULT
 refers to the system defined memory use based on \texttt{numactl} system

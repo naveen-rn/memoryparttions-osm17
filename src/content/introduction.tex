@@ -17,7 +17,7 @@ In response, it is for the programming library interfaces like
 OpenSHMEM~\cite{osm} to provide a more consistent and portable interface
 for accessing different kinds of memory on tiered memory systems.
 
-In this paper, we define the OpenSHMEM runtime changes and extensions
+In this paper, we define the OpenSHMEM runtime changes and routines
 to support different kinds of memory for the symmetric heap. The
 OpenSHMEM memory model creates the symmetric heap during program
 execution on a memory region determined by the implementation. The
@@ -29,7 +29,7 @@ characteristics and memory kind being one of those featured traits.
 
 The major contributions of this work are:
 \begin{itemize}
-    \item proposing a set of new runtime changes and extensions in
+    \item proposing a set of new runtime changes and routines in
     OpenSHMEM to support different kinds of memory on tiered systems;
     \item implementation of the proposed changes in
     Cray SHMEM~\cite{csma} for Intel KNL processors as an example
@@ -38,7 +38,7 @@ The major contributions of this work are:
     %from Cray Inc;
     \item performance regression analysis on creating multiple symmetric
     partitions; and
-    \item performance analysis of these proposed extensions using
+    \item performance analysis of these proposed routines using
     modified Parallel Research Kernels (ParRes)~\cite{parres}.
 \end{itemize}
 
@@ -48,9 +48,9 @@ and in Section~\ref{src:knl} we describe Intel KNL architecture with its
 different modes of memory configuration. Section~\ref{src:mmodel}
 illustrates the current OpenSHMEM memory model and necessitates the need
 for changes in the existing memory model. In Section~\ref{src:smempart}
-we propose the new runtime changes and extensions in OpenSHMEM memory
-model and follow up with the implementation of the proposed changes in
-Cray SHMEM in Section~\ref{src:implement}.
+we propose the new symmetric memory partition feature and follow up with
+the implementation of the proposed changes in Cray SHMEM in
+Section~\ref{src:implement}.
 Section~\ref{src:regression} provide details of the performance
 regression analysis on the implementation and in Section~\ref{src:perf}
 we use ParRes OpenSHMEM kernels to present the performance benefits on
