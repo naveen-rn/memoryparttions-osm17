@@ -9,6 +9,7 @@ Registration, Cray SHMEM implementation over DMAPP uses basic memory
 registration and hence there is a increase in memory footprint on
 DMAPP-level on maintaining symmetric heaps on each PE.
 
+\vspace{-20pt}
 \begin{algorithm}[!h]
 \begin{algorithmic}
     \Procedure{\texttt{shmem\_putmem}}
@@ -25,8 +26,8 @@ DMAPP-level on maintaining symmetric heaps on each PE.
             segment\_identified = \textit{false}\;
             \For {\normalfont (int i = 1; i $\leq$ N; i++)}{
                 \If{\normalfont (dest.segment $\equiv$
-                    \texttt{USE\_SEGMENT\_i})} {
-                    target\_seg = \texttt{USE\_SEGMENT\_i})\;
+                    \texttt{USER\_SEGMENT\_i})} {
+                    target\_seg = \texttt{USER\_SEGMENT\_i})\;
                     segment\_identified = \textit{true}\;
                 }
             }
@@ -42,40 +43,21 @@ DMAPP-level on maintaining symmetric heaps on each PE.
     \label{algo:normal-lookup}
 \end{algorithmic}
 \end{algorithm}
+\vspace{-20pt}
 
 Apart from the increase in memory footprint on memory registration,
 identifing the correct symmetric heap segment before performing an
-underlying communication operation with symmetric heap lookup on each
-RMA and AMO operation is expected to introduce performance
-regression. Algorithm~\ref{algo:normal-lookup} shows the introduction
-of lookup trying to match the correct symmetric heap segment on the
+underlying communication operation is essential. %with symmetric heap lookup on each
+%RMA and AMO operation is expected to introduce performance
+%regression.
+Algorithm~\ref{algo:normal-lookup} shows the introduction lookup
+logic trying to match the correct symmetric heap segment on the
 \texttt{shmem\_putmem} operation. Similar, lookups are introduced in
 all OpenSHMEM RMA and AMO operations. \texttt{USER\_SEGMENT} refers to
 the symmetric heap segments created on user-defined memory partitions.
 
-We measured the performance regression behind this additional lookup
-operation using a modified OSU microbenchmark~\cite{pgas-benchmarks}
-on a Cray XC system with Intel KNL processors using 2 PEs with 1 PE per
-node.
-The normal OSU microbenchmark selects the memory segment (either
-\texttt{DATA\_SEGMENT} or \texttt{SHEAP\_SEGMENT}) of the buffer
-per job. We modified this \texttt{shmem\_put} benchmark by creating
-one destination buffer per \texttt{N} partitions and we randomly select
-the destination buffer from different partitions for every iteration.
-We timed the average performance of all the iterations of the
-\texttt{shmem\_putmem} operation.
-
-Figure~\ref{graph:lookup} shows the
-performance difference between using 1 and 7 partitions on very small
-data sies. There are average performance variations is around 2\% to
-3\% and this variation can be attributed as noise. But, if we increase
-the number of partitions to 127, we could see the variations as high as
-6\%. We expect users to create only one partition per memory kind
-and not \texttt{N} unnecessary partitions. Moreover, as mentioned in
-Table~\ref{tab:const} the \texttt{SHMEMX\_MAX\_PARTITIONS} library constant
-in Cray SHMEM is 7.
-
-\begin{figure*}[t!]
+\begin{figure*}[h!]
+    \vspace{-30pt}
     \centering
     \includegraphics[width=\linewidth]{graph/osu-put.eps}
     \caption{Performance difference on using destination buffers
@@ -84,6 +66,28 @@ in Cray SHMEM is 7.
     \label{graph:lookup}
     \vspace{-20pt}
 \end{figure*}
+
+We measured the performance regression behind this additional lookup
+operation using a modified OSU microbenchmark~\cite{pgas-benchmarks}
+on a Cray XC system with Intel KNL processors. We used 2 PEs with 1
+PE per node for the tests.
+The normal OSU microbenchmark selects the buffer from the memory
+segment (either \texttt{DATA\_SEGMENT} or \texttt{SHEAP\_SEGMENT})
+per job. We modified the \texttt{shmem\_putmem} benchmark by creating
+one destination buffer per \texttt{N} partitions and randomly select
+the destination buffer from different partitions for every iteration.
+We timed the average performance of all the iterations of the
+\texttt{shmem\_putmem} operation.
+
+Figure~\ref{graph:lookup} shows the
+performance difference between using 1 and 7 partitions on very small
+data sizes. The average performance variations is around 2\% to
+3\% and this can be attributed as noise. But, if we increase
+the number of partitions to 127, we could see the variation as high
+as 6\%. We expect users to create only one partition per memory kind
+and not \texttt{N} unnecessary partitions. Moreover, as mentioned in
+Table~\ref{tab:const} the \texttt{SHMEMX\_MAX\_PARTITIONS} library
+constant in Cray SHMEM is 7.
 
 We observe similar performance variation on small data sizes on other
 RMA and AMO operations. For larger message sizes, the segment lookup
