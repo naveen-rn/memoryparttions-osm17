@@ -1,19 +1,23 @@
 \section{Related Work}
 \label{src:relate}
-In this paper we studied the necessity for basic OpenSHMEM changes
-to utilize different kinds of memory. The need for these features
-for supporting upcoming system architectures are not specific to
+%In this paper we studied the necessity for basic OpenSHMEM changes
+%to utilize different kinds of memory.
+The need for utilizing different kinds of memory %these features
+in upcoming system architectures are not specific to
 OpenSHMEM. %Other programming libraries are planning on such similar
 %features in their specifications.
-For example, OpenMP~\cite{openmp} Affinity subcommittee proposes changes
-for memory management support for future architectures.
+%For example,
+OpenMP~\cite{openmp} Affinity subcommittee proposes changes
+for memory management~\cite{omp-tr5} support for future architectures.
 %discuss on the runtime changes
 %needed for supporting multiple kinds of memory for future architectures.
-Similarly, Cray MPICH which is an optimized MPI
+Similarly Cray MPICH, an optimized MPI
 implementation for Cray systems have improvised the functionality of
-\texttt{MPI\_Alloc\_mem} to enable users to select the kind of memory to
-for allocating the requested memory size. ~\citeauthor{cug17-krishna}
-provides detailed explanation on the performance of using different
-memory kinds using \texttt{MPI\_Alloc\_mem} on two real world
+\texttt{MPI\_Alloc\_mem} routine for allocating the requested
+memory size on user-determined
+memory kind. ~\citeauthor{cug17-krishna}
+provides detailed explanation on the performance benefits of using
+different
+memory kinds using \texttt{MPI\_Alloc\_mem} on real world
 applications WOMBAT and SNAP.
 %need to fix citataions correctly

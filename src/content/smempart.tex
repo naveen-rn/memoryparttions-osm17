@@ -25,9 +25,9 @@ are as follows:
     \item symmetric heap is created on a single memory region
     determined by the implementation or on multiple memory regions
     determined by the users. The user-determined memory regions are
-    called as Symmetric Memory Partitions;
+    called Symmetric Memory Partitions;
     \item only a single symmetric heap is created at each partition;
-    \item multiple symmetric heaps can be created by defining
+    \item multiple symmetric heaps are created by defining
     multiple separate symmetric memory partitions;
     \item each symmetric memory partition is identified using its
     \emph{Partition ID} label;
@@ -71,7 +71,7 @@ following features and traits.
 feature. It is a label to identify a partition and is represented
 as an integer. \texttt{SHMEM\_MAX\_PARTITIONS} and
 \texttt{SHMEM\_MAX\_PARTITION\_ID} are the library constants to
-define the maximum number of partitions and the range of
+define the maximum number of partitions and the usable range of
 the partition ID respectively.
 
 %A maximum of \texttt{SHMEM\_MAX\_PARTITIONS} can
@@ -80,7 +80,7 @@ the partition ID respectively.
 \subsubsection{SIZE} \texttt{SIZE} is the only required trait. It
 represents the number of bytes used for allocating the symmetric
 heap. The total size of the symmetric heap is %determined as the
-the sum of SIZE traits in all the defined partitions.
+the sum of \texttt{SIZE} traits in all the defined partitions.
 
 \subsubsection{PGSIZE} \texttt{PGSIZE} is an optional trait to
 represent the number of bytes used to specify the size of the
@@ -90,11 +90,11 @@ page used by the partition.
 It is identified with a string constant. It is used to specify
 the kind of memory used by the partition. On systems supporting
 multiple different kinds of memory, each memory that is identified
-and documented by the implementation can used as input to represent
-the KIND.
+and documented by the implementation is used as input to represent
+the \texttt{KIND}.
 
 \subsubsection{POLICY} \texttt{POLICY} is an optional trait and
-is identified using string constants to represent the %memory
+is identified using string constants to represent the memory
 allocation policy for the other optional traits. It determines
 the strictness level to be honoured by the implementation.
 
@@ -140,7 +140,7 @@ following two new routines: \texttt{shmem\_partition\_malloc} and
             keywordstyle=\bfseries,
             basicstyle=\tt\small,
             frame=single}
-    \vspace{-20pt}
+    \vspace{-10pt}
     \begin{lstlisting}
 void *shmem_partition_malloc(size_t size, int partition_id);
 void *shmem_partition_align(size_t alignment, size_t size,
@@ -154,8 +154,8 @@ void *shmem_partition_align(size_t alignment, size_t size,
 
 The functional semantics and the requirements of
 \texttt{shmem\_partition\_malloc} and \texttt{shmem\_partition\_align}
-are very similar to \texttt{shmem\_malloc} and \texttt{shmem\_align},
-the only difference is that the new routines allows users to determine
+are very similar to \texttt{shmem\_malloc} and \texttt{shmem\_align}.
+The only difference is that the new routines allows users to determine
 the symmetric heap using the partiton ID argument. %Existing
 \texttt{shmem\_realloc} and \texttt{shmem\_align} routines should
 reallocate within the same partition and release resources respectively.

@@ -6,11 +6,11 @@
 \begin{tabular}{|c c|}\hline
     Library Constants & Values \\[0.5ex]
     \hline\hline
-    SHMEMX\_MAX\_PARTITIONS & 7 \\
-    SHMEMX\_MAX\_PARTITION\_ID & 127 \\
+    \texttt{SHMEMX\_MAX\_PARTITIONS} & 7 \\
+    \texttt{SHMEMX\_MAX\_PARTITION\_ID} & 127 \\
     \hline
 \end{tabular}
-\caption{Memory partition specific OpenSHMEM library constants}
+\caption{Memory partition specific library constants in Cray SHMEM}
 \label{tab:const}
 \end{table}
 \vspace{-20pt}
@@ -27,19 +27,20 @@ range of partition ID and the maximum number of partitions per job.
 \begin{tabular}{|l l l|}\hline
     Traits & Values & Explanation\\[0.5ex]
     \hline\hline
-    \multirow{3}{4em}{KIND} & NORMALMEM  & primary memory kind for
-                                           the node \\
-                            & FASTMEM    & faster memory in addition
-                                           to NORMALMEM \\
-                            & SYSDEFAULT & system defined memory \\
+    \multirow{3}{4em}{\texttt{KIND}} & \texttt{NORMALMEM}  & primary memory kind for
+                                                             the node \\
+                            & \texttt{FASTMEM}    & faster memory in addition
+                                                    to \texttt{NORMALMEM} \\
+                            & \texttt{SYSDEFAULT} & system defined memory \\
                             &&\\
-    \multirow{4}{4em}{POLICY} & MANDATORY   & abort if requested memory
-                                              kind not available \\
-                              & PREFERRED   & use other memory kinds if
-                                              requested kind fails \\
-                              & INTERLEAVED & page allocation interleaved
-                                              across NUMA domains \\
-                              & SYSDEFAULT  & system defined policy \\
+    \multirow{4}{4em}{\texttt{POLICY}} & \texttt{MANDATORY}
+                                                     & abort if requested memory
+                                                       kind not available \\
+                              & \texttt{PREFERRED}   & use other memory kinds if
+                                                       requested kind fails \\
+                              & \texttt{INTERLEAVED} & page allocation interleaved
+                                                       across NUMA domains \\
+                              & \texttt{SYSDEFAULT}  & system defined policy \\
     \hline
 \end{tabular}
 \caption{Available partition traits in Cray SHMEM}
@@ -47,28 +48,40 @@ range of partition ID and the maximum number of partitions per job.
 \end{table}
 \vspace{-20pt}
 
-User-defined SIZE and PGSIZE traits are any appropriate symmetric heap size
+User-defined \texttt{SIZE} and \texttt{PGSIZE} traits are any appropriate
+symmetric heap size
 and available page size in the system represented as bytes.
-Table~\ref{tab:trait} refers the values for KIND and POLICY traits. KIND
-determines the type of memory and POLICY the memory kind allocation policy.
+Table~\ref{tab:trait} refers the values for \texttt{KIND} and
+\texttt{POLICY} traits. %\texttt{KIND}
+%determines the type of memory and \texttt{POLICY} the memory kind
+%allocation policy.
 
-On Intel KNL systems, NORMALMEM refers to DDR4 and FASTMEM refers to
-MCDRAM. If MCDRAM is requested and the requested kind if unavailable,
+On Intel KNL systems, \texttt{NORMALMEM} refers to DDR4 and
+\texttt{FASTMEM} refers to
+MCDRAM. If the requested kind if unavailable,
 based on the allocation policy Cray SHMEM either aborts or looks for
-other possible alternatives. INTERLEAVED is used to shift allocation
+other possible alternatives. \texttt{INTERLEAVED} is used to shift
+allocation
 across
 different NUMA domains. As mentioned in section~\ref{src:knl/cluster},
-number of NUMA domains depends on the NUMA clustering either through
-quadrant or SNC configurations. On quadrant mode, since MCDRAM is
+number of NUMA domains depends on the cluster configuration modes.
+% either through
+%quadrant or SNC configurations.
+On quadrant mode, since MCDRAM is
 available as a
-single NUMA domain, INTERLEAVED will allocate on a single NUMA domain.
-On SNC2 and SNC4 mode, allocation interleaves across 2 and 4 NUMA domains
+single NUMA domain, \texttt{INTERLEAVED} will allocate on a single
+NUMA domain.
+On SNC2 and SNC4 mode, allocation interleaves across 2 and 4 NUMA
+domains
 respectively.
 
 All the available kinds of memory are identified and the environment
-variables are queried during \texttt{shmem\_init} operation.
-\texttt{numactl} controls the NUMA policy for processes or shared memory
-with NUMA policy aware kernels. Memory kind identification in Cray SHMEM
+variables are queried during \texttt{shmem\_init} operation. On NUMA
+policy aware kernels,
+\texttt{numactl} controls the NUMA policy for processes.% on shared memory
+%with NUMA policy aware kernels.
+Memory kind identification in Cray SHMEM
 is performed using \texttt{numactl}. There are no implementation defined
-default values. SYSDEFAULT refers to the system defined memory use based
+default values. \texttt{SYSDEFAULT} refers to the system defined memory
+use based
 on \texttt{numactl} system calls.
