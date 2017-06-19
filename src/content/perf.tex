@@ -73,7 +73,7 @@ the symmetric heap segments created on user-defined memory partitions.
 \end{figure*}
 
 We measured the performance regression behind this additional lookup
-operation using a modified OSU microbenchmark~\cite{pgas-benchmarks}
+operation using a modified OSU microbenchmark~\cite{osu-mb}
 on a Cray XC system with Intel KNL processors. To measure the average
 latency on every \texttt{shmem\_putmem} operation, we used 2 nodes
 with 1 PE per node.
@@ -103,3 +103,14 @@ does not contribute for any performance variation.
 
 \section{Performance Analysis}
 \label{src:perf}
+
+\begin{figure*}[h!]
+%    \vspace{-30pt}
+    \centering
+    \includegraphics[width=\linewidth]{graph/2d-stencil.eps}
+    \caption{Performance difference on using different kinds of memory
+    and different hugepages on ParRes 2D-Stencil SHMEM kernels}
+    \label{graph:2dstencil}
+%    \vspace{-20pt}
+\end{figure*}
+

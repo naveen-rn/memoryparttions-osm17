@@ -1,2 +1,35 @@
 \section{Conclusion}
 \label{src:conclusion}
+In this paper, we described our study on the need for
+changes in
+the existing OpenSHMEM memory model to enable users in
+utilizing
+the different available kinds of memory on emerging tiered
+memory architectures. We motivated this change
+by illustating the missing features on OpenSHMEM for
+supporting Intel KNL processors with different memory
+configurations.
+%We then introduced a new feature called \texttt{Symmetric
+%Memory partitions} in OpenSHMEM and
+We then proposed the runtime
+changes with its associated new routines %associated with this feature
+for
+supporting different kinds of memory using a new feature in
+OpenSHMEM called \texttt{Symmetric Memory Partitions}.
+We implemented
+symmetric memory partitions on Cray SHMEM as
+\texttt{SHMEMX} prefixed features without breaking
+backward compatibility and any performance regression.
+We validated our implementation with ParRes kernels on Intel
+KNL processors, for which we received a close to 25\%
+improvements compared to using MCDRAM against DDR4.
+
+The basic changes proposed for Symmetric memory partitions
+are based on our best estimate for supporting emerging tiered
+memory systems. In future work, we will build on the proposed
+features and include other addititonal types of memory like
+persistent memory and constant memory. Moreover, our early
+performance analysis are performed on kernels with the
+entire memory fitting into one single kind. In future, we will
+also test on bandwidth bound applications with requirement
+for more than one kind of memory.
