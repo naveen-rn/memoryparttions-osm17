@@ -1,7 +1,7 @@
 \section{Background}
 \label{src:bground}
 
-In this section, we provide a brief introduction to Cray SHMEM.% and an
+This section provides a brief introduction to Cray SHMEM.% and an
 %overview to the existing memory model in the OpenSHMEM standard
 %specification.
 
@@ -10,10 +10,10 @@ In this section, we provide a brief introduction to Cray SHMEM.% and an
 OpenSHMEM is a Partitioned Global Address Space~\cite{pgas} (PGAS) library
 interface specification.% which is a culmination of a unification effort
 %among various vendors and users in the SHMEM programming community.
-It
-provides an Application Programming Interface (API) for the SHMEM libraries
-to support one-sided point-to-point data communication with a chief aim of
-performance and portability. %It follows an SPMD-like execution model.
+With a chief aim of performance and portability, OpenSHMEM
+provides an Application Programming Interface (API) for SHMEM libraries
+to support one-sided point-to-point data communication.
+%It follows an SPMD-like execution model.
 %, where
 %all the processes or Processing Elements(PEs) are launched at the begining
 %of the program; each PE executes the same code and the number of PEs remains
@@ -31,17 +31,18 @@ performance and portability. %It follows an SPMD-like execution model.
 %There are various optimized production-grade closed source as well as open source
 %OpenSHMEM implementations available.
 Cray SHMEM~\cite{csma} is a vendor-based
-closed source OpenSHMEM implementation from Cray Inc., available as part of the
+closed source OpenSHMEM implementation from Cray Inc.
+It is available as part of
 Cray Message Passing Toolkit~\cite{mpt} (MPT). It is OpenSHMEM
 specification version-1.3~\cite{osm13} compliant and implemented over
 DMAPP~\cite{dmapp}, an
 optimized communication layer for Cray architectures. Apart from the OpenSHMEM standard
 specific features, it provides support for the following features as \texttt{SHMEMX}
-prefixed extensions:
+prefixed routines:
 \begin{itemize}
     \item thread-safety in Cray SHMEM;
     \item put with signal communication;
     \item PE subsets called as Teams; and
-    \item Team-based collective communication extensions
+    \item Team-based collective communication routines
 \end{itemize}
 

@@ -10,19 +10,22 @@
     \label{fig:mmodel}
 \end{figure}
 
-OpenSHMEM program consists of two types of data objects: private
-and remotely
-accessible data objects. The private data objects are local
+As shown in Fig.~\ref{fig:mmodel}, an OpenSHMEM program consists of
+two types of data objects: private and remotely
+accessible data objects.
+The private data objects are local
 to a particular PE and are accessible by only that PE. It follows the
 same memory model of the base programming language\footnote{With the
-proposed deprecation of Fortran routines in OpenSHMEM, all reference
-to Fortran has been ommitted in this paper.} (C or C++). The
-remotely accessible data objects are accessible by any PE
+proposed deprecation of Fortran support in OpenSHMEM, in this paper
+there is no reference to Fortran routines.} (C or C++). The
+remotely accessible data objects are called
+\emph{Symmetric Data Objects} and are accessible by all PEs.
 %using the
-%OpenSHMEM routines
-and are called as \emph{Symmetric Data Objects}.
-Each symmetric data object has a corresponding object with same %variable
-name, size and data type on all PEs. The following variables are considered
+%OpenSHMEM routines.
+Each symmetric data object has a corresponding object on all PEs
+with same %variable
+name, size and data type.% on all PEs.
+The following variables are considered
 Symmetric Data Objects:
 \begin{itemize}
     \item global or static variable on C/C++ and not defined in DSO; and
@@ -36,18 +39,22 @@ execution on a memory region determined by the OpenSHMEM implmentation.
 It may reside on different memory regions on different PEs. Users
 control only the size of the symmetric heap using
 \texttt{SMA\_SYMMETRIC\_SIZE} environment variable.
+On systems with heterogeneous memory architectures, the symmetric heap
+can be associated with different memory architectures on different PEs.
+This can lead to highly variable communication costs for PEs accessing
+objects on symmetric heaps.
 %Except the
 %size of the symmetric heap determined by \texttt{SMA\_SYMMETRIC\_SIZE}
 %environment variable, users have no other control on any property of
 %the symmetric heap.
 
-Fig.~\ref{fig:mmodel}, shows the different types of data objects in
-OpenSHMEM. Global and Static variables are allocated on the
-\emph{data segment}, while the variables with data allocated using
-\texttt{shmem\_malloc} routines are placed on the \emph{symmetric heap
-segment}. Variables on both the data and symmetric heap segments are
-remotely accessible. Fig.~\ref{fig:mmodel} also shows that there is only
-one symmetric heap per PE. %Local variables are allocated on the local
+%Fig.~\ref{fig:mmodel}, shows the different types of data objects in
+%OpenSHMEM. Global and Static variables are allocated on the
+%\emph{data segment}, while the variables with data allocated using
+%\texttt{shmem\_malloc} routines are placed on the \emph{symmetric heap
+%segment}. Variables on both the data and symmetric heap segments are
+%remotely accessible. Fig.~\ref{fig:mmodel} also shows that there is only
+%one symmetric heap per PE. %Local variables are allocated on the local
 %data objects which retains the same memory model from the underlying
 %base language.
 
@@ -66,8 +73,11 @@ can improve the performance. Based on the MCDRAM utilization, memory
 bandwidth bound applications are of two types:
 \begin{itemize}
     \item the entire memory of the application can fit in the MCDRAM; and
-    \item applications capable of partitioning memory usage into
-    bandwidth critical and normal part, with the bandiwdth critical part
+    \item capable of identifying specific bandwidth bound buffers and data
+    access patterns,
+    %applications capable of partitioning memory usage into
+    %bandwidth critical and normal part,
+    with the bandiwdth critical part
     allocated on MCDRAM
 \end{itemize}
 The current OpenSHMEM memory model does not handle both the above mentioned
