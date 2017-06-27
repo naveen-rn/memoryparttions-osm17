@@ -33,12 +33,15 @@ to support one-sided point-to-point data communication.
 Cray SHMEM~\cite{csma} is a vendor-based
 closed source OpenSHMEM implementation from Cray Inc.
 It is available as part of
-Cray Message Passing Toolkit~\cite{mpt} (MPT). It is OpenSHMEM
+Cray Message Passing Toolkit~\cite{mpt} (MPT) software stack. It is
+OpenSHMEM
 specification version-1.3~\cite{osm13} compliant and implemented over
-DMAPP~\cite{dmapp}, an
-optimized communication layer for Cray architectures. Apart from the OpenSHMEM standard
-specific features, it provides support for the following features as \texttt{SHMEMX}
-prefixed routines:
+DMAPP~\cite{dmapp}.DMAPP is an
+optimized communication library to support logically shared, distributed
+memory programming model on Cray architectures. Apart from the
+OpenSHMEM standard
+specific features, it provides support for the following features:% as
+%\texttt{SHMEMX} prefixed routines:
 \begin{itemize}
     \item thread-safety in Cray SHMEM;
     \item put with signal communication;

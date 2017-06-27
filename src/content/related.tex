@@ -20,4 +20,17 @@ provides detailed explanation on the performance benefits of using
 different
 memory kinds using \texttt{MPI\_Alloc\_mem} on real world
 applications WOMBAT and SNAP.
+
+Similarly, the concept of creating multiple symmetric heaps in OpenSHMEM
+is not unique to the proposal introduced in this paper.
+~\citeauthor{osm-spaces} proposes \texttt{Teams} and
+\texttt{Memory Spaces} in OpenSHMEM.
+OpenSHMEM Teams are PE subsets and Memory Spaces are team-specific
+symmetric heaps. Cray SHMEM already supports OpenSHMEM
+Teams~\cite{knaak2015}
+as \texttt{SHMEMX} prefixed features. With the introduction of
+symmetric memory partitions, it
+is logical to understand the possibilities of combining
+memory partitions as part of OpenSHMEM Teams and introducing multiple
+symmetric heaps on each partition in the form of Memory Spaces.
 %need to fix citataions correctly
