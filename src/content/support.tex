@@ -35,14 +35,15 @@ Symmetric Data Objects:
 The data allocated by \texttt{shmem\_malloc} collective OpenSHMEM
 routines are placed on a special memory region called \emph{Symmetric
 Heap}. There is one symmetric heap on every PE created during the program
-execution on a memory region determined by the OpenSHMEM implmentation.
-It may reside on different memory regions on different PEs. Users
+execution on a memory region determined by the OpenSHMEM implementation.
+%It may reside on different memory regions on different PEs.
+Users
 control only the size of the symmetric heap using
 \texttt{SMA\_SYMMETRIC\_SIZE} environment variable.
-On systems with heterogeneous memory architectures, the symmetric heap
-can be associated with different memory architectures on different PEs.
-This can lead to highly variable communication costs for PEs accessing
-objects on symmetric heaps.
+%On systems with heterogeneous memory architectures, the symmetric heap
+%can be associated with different memory architectures on different PEs.
+%This can lead to highly variable communication costs for PEs accessing
+%objects on symmetric heaps.
 %Except the
 %size of the symmetric heap determined by \texttt{SMA\_SYMMETRIC\_SIZE}
 %environment variable, users have no other control on any property of
@@ -64,7 +65,9 @@ As mentioned in Section~\ref{src:knl/config}, MCDRAM in Intel KNL can be
 configured either as cache or as addressable memory. While configuring as
 cache is a convenient way to port existing applications on to KNL based
 systems, it is more suitable only for applications that are optimized for
-cache utilizations and with small memory footprint.
+cache utilizations and with small memory footprint. As cache utilization
+depends specifically on the application, it is not for OpenSHMEM to handle
+anything for cache mode.
 
 The flat mode configuration is suitable for memory bandwidth bound
 applications. Taking advantage of the high bandwidth offered by MCDRAM by
@@ -72,14 +75,16 @@ making it available as a distinct NUMA node and re-designing an application
 can improve the performance. Based on the MCDRAM utilization, memory
 bandwidth bound applications are of two types:
 \begin{itemize}
-    \item the entire memory of the application can fit in the MCDRAM; and
-    \item capable of identifying specific bandwidth bound buffers and data
-    access patterns,
+    \item the entire application memory fits in the MCDRAM; and
+    \item applications capable of identifying specific bandwidth bound
+    buffers and data access patterns,
     %applications capable of partitioning memory usage into
     %bandwidth critical and normal part,
-    with the bandiwdth critical part
+    with the bandwidth critical part
     allocated on MCDRAM
 \end{itemize}
-The current OpenSHMEM memory model does not handle both the above mentioned
-categories for utilizing MCDRAM in flat mode configuration. And it is not
-for OpenSHMEM to handle anything special for cache mode configuration.
+%For the flat mode configuration,
+The current OpenSHMEM memory model %does not
+%provide control to users on memory kind selection for symmetric heap, it
+does not handle both the above
+mentioned application categories on the flat mode.

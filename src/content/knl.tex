@@ -15,13 +15,17 @@ threads per core. %Apart from offering more than 2 TF double precision
 %floating point performance, each KNL core supports two 512-bit vector
 %units and AVX-512 SIMD intructions.
 The 68 compute cores are organized
-in 34 tiles with each tile having 2 compute cores and a shared 1MB
-L2 cache. These 34 tiles are placed in a 2D mesh and connected through
+in 34 tiles with each tile having 2 compute cores.% and a shared 1MB
+%L2 cache.
+These 34 tiles are placed in a 2D mesh and connected through
 an on-chip interconnect. In addition to traditional
-DRAM, KNL offers an on-package high bandwidth memory
+DDR\footnote{Intel KNL supports double data rate fourth-generation
+(DDR4)
+synchronous dynamic random-access memory.}, KNL offers an on-package
+high bandwidth memory
 technology called Multi-Channel DRAM (MCDRAM). It offers high
-bandwidth up to 4X more than DDR4, but with limited capacity (up to
-16GB) when compared to DDR4 (up to 384GB).
+bandwidth up to 4X more than DDR, but with limited capacity (up to
+16GB) when compared to DDR (up to 384GB).
 %MCDRAM can be configured as a direct mapped L3 cache layer or as a
 %distinct NUMA node. Configuring the MCDRAM as an L3 cache layer is a
 %convenient way to port existing applications on to KNL based systems.
@@ -45,21 +49,21 @@ bandwidth up to 4X more than DDR4, but with limited capacity (up to
 As shown in Fig.~\ref{fig:memmode}, MCDRAM can be configured in the
 following modes.
 \begin{itemize}
-    \item \texttt{cache mode} - in Cache mode
+    \item \textbf{Cache mode} - in Cache mode
     MCDRAM acts as a last-level cache and it is completely used to
-    cache the DDR4 data. %It is a convenient way to port existing
+    cache the DDR data. %It is a convenient way to port existing
     %applications on to KNL based systems;
-    \item \texttt{flat mode} - in Flat mode the complete
+    \item \textbf{Flat mode} - in Flat mode the complete
     MCDRAM is available as an addressable memory and share the
-    physical address space with DDR4. With respect to Non Uniform
+    physical address space with DDR. With respect to Non Uniform
     Memory Access (NUMA), it is exposed as a separate NUMA node
-    without cores and DDR4 is exposed as another NUMA node with
-    all the cores.
+    without cores.% and DDR is exposed as another NUMA node with
+    %all the cores.
     %Configuring MCDRAM as a distinct NUMA node and
     %re-designing an application to fully take advantage of the high
     %bandwidth offered by the MCDRAM can improve the performance of
     %memory bandwidth bound applications; and
-    \item \texttt{hybrid mode} - as the name suggests, in
+    \item \textbf{Hybrid mode} - as the name suggests, in
     Hybrid mode a portion of MCDRAM is configured as addressable
     memory and the rest as cache.
 \end{itemize}
@@ -68,7 +72,7 @@ following modes.
 \label{src:knl/cluster}
 As specified previously, the 68 compute cores are arranged in a 2D
 mesh and connected using on-chip interconnect. With NUMA some memory
-on the node has different latency or bandwith to the core. %Based on
+on the node has different latency or bandwidth to the core. %Based on
 %clustering,
 There are two important types of NUMA modes: Quadrant and
 Sub-NUMA Clustering (SNC).

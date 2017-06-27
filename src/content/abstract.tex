@@ -4,8 +4,8 @@ memory available on the system. OpenSHMEM memory model consists of
 data objects that are private to each \emph{Processing Element}
 (PE) and data objects that are remotely accessible by all PEs. The
 remotely accessible data objects are called \emph{Symmetric Data
-Objects}. They are allocated on a memory region called as
-\emph{Symmetric Heap} and it is created during program execution
+Objects} and are allocated on a memory region called as
+\emph{Symmetric Heap}. It is created during program execution
 on a region determined by the OpenSHMEM implementation. This paper
 proposes a new feature called \emph{Symmetric Memory Partitions} to
 enable users to determine the size along with other memory traits
@@ -13,7 +13,7 @@ for creating the symmetric heap. Moreover, this paper uses Intel KNL
 processors
 as an example use case for emerging tiered memory systems. This paper
 also describes the implementation of symmetric memory partitions in
-Cray SHMEM and use different OpenSHMEM microbenchmark kernels to
+Cray SHMEM and use ParRes OpenSHMEM microbenchmark kernels to
 show the benefits of selecting the memory region for the symmetric
 heap.
 %uses Intel KNL as
