@@ -18,4 +18,4 @@ plot '../data/osu-put.dat'                           \
         u ($1-0.25):3:2:6:5:xticlabels(8) w candlesticks lt -1    \
         lc rgb "red" ti "1-PARTITION" whiskerbars,                \
      '' u ($1+0.20):10:9:13:12 w candlesticks lt -1               \
-        lc rgb "blue" ti "7-PARTITION" whiskerbars
+        lc rgb "blue" ti "6-PARTITION" whiskerbars

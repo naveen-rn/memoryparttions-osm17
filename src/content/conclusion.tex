@@ -6,7 +6,7 @@ the existing OpenSHMEM memory model to enable users in
 utilizing
 the different available kinds of memory on emerging tiered
 memory architectures. We motivated this change
-by illustating the missing features on OpenSHMEM for
+by illustrating the missing features in OpenSHMEM for
 supporting Intel KNL processors with different memory
 configurations.
 %We then introduced a new feature called \texttt{Symmetric
@@ -22,12 +22,12 @@ symmetric memory partitions on Cray SHMEM as
 backward compatibility and any performance regression.
 We validated our implementation with ParRes kernels on Intel
 KNL processors, for which we received a close to 25\%
-improvements compared to using MCDRAM against DDR4.
+improvements on using MCDRAM compared to using DDR.
 
-The basic changes proposed for Symmetric memory partitions
+The basic traits proposed for symmetric memory partitions
 are based on our best estimate for supporting emerging tiered
 memory systems. In future work, we will build on the proposed
-features and include other addititonal types of memory like
+features and include other additional types of memory like
 persistent memory and constant memory. Moreover, our early
 performance analysis are performed on kernels with the
 entire memory fitting into one single kind. In future, we will

@@ -2,7 +2,10 @@
 \label{src:intro}
 
 Emerging systems support multiple kinds of memory with different
-performance and capacity characteristics. For example, the latest
+performance and capacity characteristics. %Examples of
+Systems with
+multiple kinds of memory are seen in recent architectures such as
+AMD Fiji, NVIDIA Pascal, and Intel Knights Landing. The latest
 Many Integrated Core (MIC) processor, the Intel Xeon Phi,
 code-named Knights Landing (KNL)~\cite{KNL}, combines the traditional
 off-package DDR memory with the increased high bandwidth on-package
@@ -27,14 +30,14 @@ for accessing different kinds of memory on tiered memory systems.
 
 In this paper, we define the OpenSHMEM runtime changes and routines
 to support different kinds of memory for the symmetric heap. During
-progam execution the
+program execution the current
 OpenSHMEM memory model creates the symmetric heap with specific
 memory characteristics that are determined by the implementation.
 The runtime changes described in this paper would allow users to
 determine
 a region on which the symmetric heap can be created. We call this
 user-determined region as \emph{Symmetric Memory Partition}. To define
-their characterisitcs, each memory partition features a list of traits
+their characteristics, each memory partition features a list of traits
 %to define their
 %characteristics
 and memory kind being one of those featured traits.
@@ -51,8 +54,8 @@ The major contributions of this work are:
     %from Cray Inc;
     \item performance regression analysis on creating multiple
     symmetric partitions; and
-    \item performance analysis of these proposed routines using
-    modified Parallel Research Kernels (ParRes)~\cite{parres}.
+    \item performance analysis of the proposed changes using
+    Parallel Research Kernels (ParRes)~\cite{parres}.
 \end{itemize}
 
 This paper is organized as follows.
@@ -63,7 +66,7 @@ illustrates the current OpenSHMEM memory model and necessitates the need
 for changes in the existing memory model. In Section~\ref{src:smempart}
 we propose the new symmetric memory partition feature and in
 Section~\ref{src:implement} we follow up with
-the implementation of the proposed changes in Cray SHMEM.
+the implementation of the proposed features in Cray SHMEM.
 Section~\ref{src:regression} provide details of the performance
 regression analysis on the implementation and in
 Section~\ref{src:perf}
