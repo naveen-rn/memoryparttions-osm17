@@ -12,35 +12,30 @@ off-package DDR memory with the increased high bandwidth on-package
 memory called as the Multi-Channel DRAM~\cite{MCDRAM} (MCDRAM). %MCDRAM
 %offers high bandwidth (up to 4X more than DDR4) with limited
 %capacity (up to 16GB).
-To identify the different kinds of memory,
+To identify and manage different kinds of memory,
 vendors provide their own programming approaches
 %for users to identify the different kinds of memory
 using external libraries like CUDA~\cite{cuda} and
 Memkind~\cite{memkind}.
 Applications can also use low level programming approaches.
-Irrespective of the
-selection both these approaches would limit the application
-portability.% of the
-%applications.
-To address this problem, programming libraries such as
+Irrespective of the selection, these approaches limit application
+portability. To address this problem, programming libraries such as
 %In response, it is for the programming library interfaces like
 OpenSHMEM~\cite{osm} must provide a more consistent and portable
-interface
-for accessing different kinds of memory on tiered memory systems.
+interface for accessing different kinds of memory on tiered memory systems.
 
-In this paper, we define the OpenSHMEM runtime changes and routines
+In this paper, we define a set of OpenSHMEM runtime changes and routines
 to support different kinds of memory for the symmetric heap. During
-program execution the current
+program execution, the current
 OpenSHMEM memory model creates the symmetric heap with specific
 memory characteristics that are determined by the implementation.
 The runtime changes described in this paper would allow users to
-determine
-a region on which the symmetric heap can be created. We call this
+determine a region on which the symmetric heap can be created. We call this
 user-determined region as \emph{Symmetric Memory Partition}. To define
-their characteristics, each memory partition features a list of traits
+their characterisitcs, each memory partition features a list of traits, with 
 %to define their
 %characteristics
-and memory kind being one of those featured traits.
+memory kind being one of those featured traits.
 
 The major contributions of this work are:
 \begin{itemize}
@@ -59,16 +54,16 @@ The major contributions of this work are:
 \end{itemize}
 
 This paper is organized as follows.
-In Section~\ref{src:bground} we provide a brief overview for Cray SHMEM
-and in Section~\ref{src:knl} we describe Intel KNL architecture with its
+Section~\ref{src:bground} provides a brief overview for Cray SHMEM
+and Section~\ref{src:knl} describes Intel KNL architecture with its
 different modes of memory configuration. Section~\ref{src:mmodel}
 illustrates the current OpenSHMEM memory model and necessitates the need
 for changes in the existing memory model. In Section~\ref{src:smempart}
 we propose the new symmetric memory partition feature and in
 Section~\ref{src:implement} we follow up with
 the implementation of the proposed features in Cray SHMEM.
-Section~\ref{src:regression} provide details of the performance
-regression analysis on the implementation and in
+Section~\ref{src:regression} provides details of the performance
+regression analysis with the implementation and in
 Section~\ref{src:perf}
 we use ParRes OpenSHMEM kernels to present the performance benefits on
 determining the kind of memory for creating the symmetric heap. We
